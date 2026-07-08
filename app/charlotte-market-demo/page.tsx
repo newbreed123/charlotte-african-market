@@ -453,6 +453,7 @@ export default function CharlotteMarketDemoPage() {
     () => Object.fromEntries(products.map((product) => [product.id, 1])),
   );
   const [cartOpen, setCartOpen] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
   const [fulfillment, setFulfillment] = useState("Pickup");
   const [searchValue, setSearchValue] = useState("");
   const [checkoutSubmitted, setCheckoutSubmitted] = useState(false);
@@ -652,7 +653,7 @@ export default function CharlotteMarketDemoPage() {
       </div>
 
       <header className="sticky top-0 z-30 border-b border-[#eadac0] bg-[#fff9ec]/95 backdrop-blur">
-        <nav className="mx-auto flex max-w-7xl items-center justify-between gap-5 px-5 py-5">
+        <nav className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-5 py-5">
           <a href="#" className="flex items-center gap-3" aria-label="Charlotte Market home">
             <span className="relative grid h-14 w-14 place-items-center overflow-hidden rounded-2xl bg-[#00552b] text-lg font-black text-[#f8c33a] shadow-[0_10px_28px_rgba(0,85,43,0.22)]">
               <span className="absolute -right-2 -top-2 h-9 w-9 rounded-full border-4 border-[#f8c33a]/45" />
@@ -680,6 +681,20 @@ export default function CharlotteMarketDemoPage() {
           </div>
 
           <div className="flex items-center gap-3">
+            <button
+              type="button"
+              onClick={() => setMenuOpen((current) => !current)}
+              className="inline-flex items-center gap-2 rounded-full border border-[#e0c39d] bg-white px-4 py-2 text-sm font-black text-[#061f14] shadow-sm transition hover:bg-[#fff4de] lg:hidden"
+              aria-expanded={menuOpen}
+              aria-controls="mobile-menu"
+            >
+              <span className="grid gap-1">
+                <span className="block h-0.5 w-4 rounded-full bg-[#061f14]" />
+                <span className="block h-0.5 w-4 rounded-full bg-[#061f14]" />
+                <span className="block h-0.5 w-4 rounded-full bg-[#061f14]" />
+              </span>
+              Menu
+            </button>
             <button type="button" className="hidden h-10 w-10 place-items-center rounded-full transition hover:bg-[#f4ead9] sm:grid" aria-label="Search">
               <span className="h-4 w-4 rounded-full border-2 border-[#061f14] after:ml-3 after:mt-3 after:block after:h-2 after:w-0.5 after:rotate-[-45deg] after:bg-[#061f14]" />
             </button>
@@ -699,6 +714,22 @@ export default function CharlotteMarketDemoPage() {
             </button>
           </div>
         </nav>
+        {menuOpen && (
+          <div id="mobile-menu" className="border-t border-[#eadac0] bg-[#fff9ec] px-5 py-4 shadow-[0_18px_40px_rgba(55,34,12,0.08)] lg:hidden">
+            <div className="mx-auto grid max-w-7xl gap-2">
+              {["Shop", "Categories", "Wholesale", "About Us", "Contact"].map((item) => (
+                <a
+                  key={item}
+                  href={item === "Wholesale" ? "/charlotte-market-demo/wholesale" : "#products"}
+                  onClick={() => setMenuOpen(false)}
+                  className="rounded-xl border border-[#eadac0] bg-white px-4 py-3 text-sm font-black text-[#061f14] transition hover:bg-[#fff4de]"
+                >
+                  {item}
+                </a>
+              ))}
+            </div>
+          </div>
+        )}
       </header>
 
       <section className="border-b border-[#eadac0] bg-[#fff4de] px-5 py-3">
